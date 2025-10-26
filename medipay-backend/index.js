@@ -5,7 +5,7 @@ require('dotenv').config();
 
 const app = express();
 const prisma = new PrismaClient();
-const port = process.env.PORT || 3002;
+const port = process.env.PORT || 3001;
 
 app.use(cors());
 app.use(express.json());
@@ -30,13 +30,12 @@ app.get('/', (req, res) => {
   res.send('MediPay Backend is running');
 });
 
-// Test Prisma connection on startup
 async function startServer() {
   try {
     await prisma.$connect();
     console.log('Connected to Neon database');
-    app.listen(port, () => {
-      console.log(`Server running on http://localhost:${port}`);
+    app.listen(port, '0.0.0.0', () => {
+      console.log(`Server running on http://0.0.0.0:${port}`);
     });
   } catch (error) {
     console.error('Failed to connect to database:', error);
